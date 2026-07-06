@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.3
+- Fix: clicking the panel button blanked Claude's chat and did not open the palette. The button was a `<button>` that synthesized an anchor click; a synthesized click arrives with `event.view === null`, so VSCode's webview link handler ignores it and the sandboxed frame self-navigates to the `vscode:` URI (blanking the chat) instead of routing to the extension. The button is now a real `<a>` the user clicks directly, so VSCode intercepts the click and opens the palette via `openExternal` without navigating the frame.
+
 ## 0.4.2
 - Self-update from GitHub Releases: on startup (at most once a day) the extension checks for a newer release and offers a one-click "Update now" that downloads and installs the latest VSIX, then prompts to reload. VSIX installs don't auto-update on their own, so this is the install-once-stay-current path.
 - The status-bar item now badges when an update is available ("Skills v0.4.1 → v0.4.2" on a warning background); clicking the item opens a small menu to open the palette or check for updates.
